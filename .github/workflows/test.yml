@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Log Issue
+name: Log Changes
 
 # Controls when the workflow will run
 on:
@@ -30,20 +30,20 @@ jobs:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          echo "---" >> Changelog.md
-          echo "## ${ISSUE_TITLE} [$(date +"%D %T")]" >> Changelog.md
-          echo "" >> Changelog.md
-          echo "${ISSUE_BODY}" >> Changelog.md
-          echo "" >> Changelog.md
+          echo "---" >> README.md
+          echo "## ${ISSUE_TITLE} [$(date +"%D %T")]" >> README.md
+          echo "" >> README.md
+          echo "${ISSUE_BODY}" >> README.md
+          echo "" >> README.md
 
       # Commit changes
       - name: commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          if git diff Changelog.md | grep . > /dev/null ; then
+          if git diff README.md | grep . > /dev/null ; then
             git pull
-            git add Changelog.md
+            git add README.md
             git commit -m "log closed issue"
             git push
           fi
