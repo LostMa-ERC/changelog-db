@@ -78,11 +78,8 @@ jobs:
           git config --local user.name "GitHub Action"
           git pull
 
-      - name: Convert records to CSV
-        run: heurist dump -d ${DB} -l ${LOGIN} -p ${PASSWORD} -f csv -o ./data -r 101 -r 102 -r 103 --detailed
-
-      - name: Convert records to Parquet
-        run: heurist dump -d ${DB} -l ${LOGIN} -p ${PASSWORD} -f parquet -o ./data -r 101 -r 102 -r 103
+      - name: Export records
+        run: heurist dump -d ${DB} -l ${LOGIN} -p ${PASSWORD} -o ./data -f ./data/lostma.duckdb
 
       - name: Show files
         run: ls -l ./data
